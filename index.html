@@ -10,60 +10,41 @@
 
 <body>
 
-    <!-- زر القائمة للجوال -->
     <button class="mobile-menu-btn" id="mobileMenuBtn" title="القائمة">☰</button>
 
-    <!-- الشريط الجانبي -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="logo-icon">🚗</span>
             <h2>متجر قطع السيارات</h2>
-            <small>نظام المدين والدائن والمستودع</small>
+            <small>نظام شامل</small>
         </div>
         <nav class="sidebar-nav">
-            <a data-page="dashboard" class="active">
-                <span class="nav-icon">📊</span> لوحة التحكم
-            </a>
-            <a data-page="customers">
-                <span class="nav-icon">👥</span> العملاء (مدين/دائن)
-            </a>
-            <a data-page="inventory">
-                <span class="nav-icon">📦</span> المستودع
-            </a>
-            <a data-page="sales">
-                <span class="nav-icon">💰</span> المبيعات والديون
-            </a>
-            <a data-page="payments">
-                <span class="nav-icon">💳</span> التسديدات
-            </a>
-            <a data-page="reports">
-                <span class="nav-icon">📋</span> التقارير
-            </a>
+            <a data-page="dashboard" class="active"><span class="nav-icon">📊</span> لوحة التحكم</a>
+            <a data-page="customers"><span class="nav-icon">👥</span> العملاء</a>
+            <a data-page="suppliers"><span class="nav-icon">🏭</span> الموردين</a>
+            <a data-page="inventory"><span class="nav-icon">📦</span> المستودع</a>
+            <a data-page="sales"><span class="nav-icon">💰</span> المبيعات</a>
+            <a data-page="purchases"><span class="nav-icon">📥</span> المشتريات</a>
+            <a data-page="payments"><span class="nav-icon">💳</span> تسديدات العملاء</a>
+            <a data-page="supplier_payments"><span class="nav-icon">🏦</span> مدفوعات الموردين</a>
+            <a data-page="reports"><span class="nav-icon">📋</span> التقارير</a>
         </nav>
-        <div class="sidebar-footer">
-            © 2025 - جميع الحقوق محفوظة
-        </div>
+        <div class="sidebar-footer">© 2025 - جميع الحقوق محفوظة</div>
     </aside>
 
-    <!-- المحتوى الرئيسي -->
     <main class="main-content" id="mainContent">
 
         <!-- لوحة التحكم -->
         <div class="page active" id="page-dashboard">
             <div class="page-header">
                 <div>
-                    <h1>📊 لوحة التحكم</h1>
-                    <span class="subtitle">نظرة عامة على المتجر</span>
+                    <h1>📊 لوحة التحكم</h1><span class="subtitle">نظرة عامة</span>
                 </div>
             </div>
             <div class="stats-grid" id="dashboardStats"></div>
-            <div class="table-container" style="margin-top:8px;">
-                <div class="table-toolbar">
-                    <strong style="font-size:15px;">📋 آخر العمليات</strong>
-                </div>
-                <div id="recentActivity" style="padding:16px;">
-                    <p class="empty-state"><span class="empty-icon">📭</span>لا توجد عمليات حديثة</p>
-                </div>
+            <div class="table-container" style="margin-top:16px;">
+                <div class="table-toolbar"><strong>📋 آخر العمليات</strong></div>
+                <div id="recentActivity" style="padding:16px;"></div>
             </div>
         </div>
 
@@ -71,25 +52,21 @@
         <div class="page" id="page-customers">
             <div class="page-header">
                 <div>
-                    <h1>👥 العملاء</h1>
-                    <span class="subtitle">إدارة العملاء - مدين ودائن</span>
-                </div>
-                <button class="btn btn-primary" onclick="openCustomerModal()">➕ إضافة عميل</button>
+                    <h1>👥 العملاء</h1><span class="subtitle">مدين ودائن</span>
+                </div><button class="btn btn-primary" onclick="openCustomerModal()">➕ إضافة عميل</button>
             </div>
             <div class="table-container">
-                <div class="table-toolbar">
-                    <input type="text" class="search-input" placeholder="🔍 بحث عن عميل..." id="customerSearch"
-                        oninput="renderCustomers()">
-                </div>
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
+                        id="customerSearch" oninput="renderCustomers()"></div>
                 <div style="overflow-x:auto;">
                     <table>
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>الاسم</th>
-                                <th>رقم الهاتف</th>
+                                <th>الهاتف</th>
                                 <th>العنوان</th>
-                                <th>الرصيد (دين/له)</th>
+                                <th>الرصيد</th>
                                 <th>الحالة</th>
                                 <th>الإجراءات</th>
                             </tr>
@@ -100,21 +77,48 @@
             </div>
         </div>
 
+        <!-- الموردين -->
+        <div class="page" id="page-suppliers">
+            <div class="page-header">
+                <div>
+                    <h1>🏭 الموردين</h1><span class="subtitle">الديون المستحقة لهم/عليهم</span>
+                </div><button class="btn btn-primary" onclick="openSupplierModal()">➕ إضافة مورد</button>
+            </div>
+            <div class="table-container">
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
+                        id="supplierSearch" oninput="renderSuppliers()"></div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الاسم</th>
+                                <th>الهاتف</th>
+                                <th>العنوان</th>
+                                <th>الرصيد (نحن مدينون)</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="suppliersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- المستودع -->
         <div class="page" id="page-inventory">
             <div class="page-header">
                 <div>
-                    <h1>📦 المستودع</h1>
-                    <span class="subtitle">إدارة مخزون قطع السيارات</span>
-                </div>
-                <button class="btn btn-primary" onclick="openInventoryModal()">➕ إضافة قطعة</button>
+                    <h1>📦 المستودع</h1><span class="subtitle">إدارة القطع</span>
+                </div><button class="btn btn-primary" onclick="openInventoryModal()">➕ إضافة قطعة</button>
             </div>
             <div class="table-container">
                 <div class="table-toolbar">
-                    <input type="text" class="search-input" placeholder="🔍 بحث عن قطعة..." id="inventorySearch"
-                        oninput="renderInventory()"></input>
+                    <input type="text" class="search-input" placeholder="🔍 بحث..." id="inventorySearch"
+                        oninput="renderInventory()">
                     <select id="categoryFilter" onchange="renderInventory()"
-                        style="padding:9px 14px;border-radius:8px;border:1.5px solid var(--border);font-family:inherit;font-size:13px;">
+                        style="padding:9px;border-radius:8px;border:1.5px solid var(--border);">
                         <option value="">جميع الفئات</option>
                         <option value="محرك">محرك</option>
                         <option value="ناقل حركة">ناقل حركة</option>
@@ -134,15 +138,16 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>اسم القطعة</th>
-                                <th>رقم القطعة</th>
-                                <th>الفئة</th>
+                                <th>الصورة</th>
+                                <th>القطعة</th>
+                                <th>رقم</th>
+                                <th>فئة</th>
                                 <th>الكمية</th>
-                                <th>سعر الشراء</th>
-                                <th>سعر البيع</th>
+                                <th>شراء</th>
+                                <th>بيع</th>
                                 <th>المورد</th>
                                 <th>تنبيه</th>
-                                <th>الإجراءات</th>
+                                <th>إجراءات</th>
                             </tr>
                         </thead>
                         <tbody id="inventoryTableBody"></tbody>
@@ -155,16 +160,12 @@
         <div class="page" id="page-sales">
             <div class="page-header">
                 <div>
-                    <h1>💰 المبيعات والديون</h1>
-                    <span class="subtitle">تسجيل مبيعات القطع وتتبع الديون</span>
-                </div>
-                <button class="btn btn-primary" onclick="openSaleModal()">🛒 تسجيل عملية بيع</button>
+                    <h1>💰 المبيعات</h1><span class="subtitle">فواتير البيع والمرتجعات</span>
+                </div><button class="btn btn-primary" onclick="openSaleModal()">🛒 بيع جديد</button>
             </div>
             <div class="table-container">
-                <div class="table-toolbar">
-                    <input type="text" class="search-input" placeholder="🔍 بحث..." id="saleSearch"
-                        oninput="renderSales()">
-                </div>
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
+                        id="saleSearch" oninput="renderSales()"></div>
                 <div style="overflow-x:auto;">
                     <table>
                         <thead>
@@ -173,12 +174,12 @@
                                 <th>التاريخ</th>
                                 <th>العميل</th>
                                 <th>القطعة</th>
-                                <th>الكمية</th>
+                                <th>كمية</th>
                                 <th>الإجمالي</th>
-                                <th>المدفوع</th>
-                                <th>المتبقي (دين)</th>
-                                <th>الحالة</th>
-                                <th>الإجراءات</th>
+                                <th>مدفوع</th>
+                                <th>متبقي</th>
+                                <th>حالة</th>
+                                <th>إجراءات</th>
                             </tr>
                         </thead>
                         <tbody id="salesTableBody"></tbody>
@@ -187,20 +188,48 @@
             </div>
         </div>
 
-        <!-- التسديدات -->
+        <!-- المشتريات -->
+        <div class="page" id="page-purchases">
+            <div class="page-header">
+                <div>
+                    <h1>📥 المشتريات</h1><span class="subtitle">فواتير الشراء من الموردين</span>
+                </div><button class="btn btn-primary" onclick="openPurchaseModal()">🧾 شراء جديد</button>
+            </div>
+            <div class="table-container">
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
+                        id="purchaseSearch" oninput="renderPurchases()"></div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>التاريخ</th>
+                                <th>المورد</th>
+                                <th>القطعة</th>
+                                <th>كمية</th>
+                                <th>الإجمالي</th>
+                                <th>مدفوع</th>
+                                <th>متبقي</th>
+                                <th>حالة</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchasesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- تسديدات العملاء -->
         <div class="page" id="page-payments">
             <div class="page-header">
                 <div>
-                    <h1>💳 التسديدات</h1>
-                    <span class="subtitle">تسجيل دفعات العملاء</span>
-                </div>
-                <button class="btn btn-success" onclick="openPaymentModal()">💵 تسجيل دفعة</button>
+                    <h1>💳 تسديدات العملاء</h1>
+                </div><button class="btn btn-success" onclick="openPaymentModal()">💵 تسجيل دفعة</button>
             </div>
             <div class="table-container">
-                <div class="table-toolbar">
-                    <input type="text" class="search-input" placeholder="🔍 بحث..." id="paymentSearch"
-                        oninput="renderPayments()">
-                </div>
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
+                        id="paymentSearch" oninput="renderPayments()"></div>
                 <div style="overflow-x:auto;">
                     <table>
                         <thead>
@@ -210,10 +239,38 @@
                                 <th>العميل</th>
                                 <th>المبلغ</th>
                                 <th>ملاحظات</th>
-                                <th>الإجراءات</th>
+                                <th>إجراءات</th>
                             </tr>
                         </thead>
                         <tbody id="paymentsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- مدفوعات الموردين -->
+        <div class="page" id="page-supplier_payments">
+            <div class="page-header">
+                <div>
+                    <h1>🏦 مدفوعات الموردين</h1>
+                </div><button class="btn btn-success" onclick="openSupplierPaymentModal()">💵 دفع للمورد</button>
+            </div>
+            <div class="table-container">
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
+                        id="supplierPaymentSearch" oninput="renderSupplierPayments()"></div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>التاريخ</th>
+                                <th>المورد</th>
+                                <th>المبلغ</th>
+                                <th>ملاحظات</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supplierPaymentsTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -224,33 +281,35 @@
             <div class="page-header">
                 <div>
                     <h1>📋 التقارير</h1>
-                    <span class="subtitle">ملخص الحسابات والمخزون</span>
                 </div>
             </div>
             <div class="stats-grid" id="reportStats"></div>
-            <div class="table-container" style="margin-top:16px;"></div>
-            <div class="table-toolbar"><strong>📋 تقرير الديون (العملاء المدينون)</strong></div>
-            <div style="overflow-x:auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>العميل</th>
-                            <th>رقم الهاتف</th>
-                            <th>إجمالي الديون</th>
-                        </tr>
-                    </thead>
-                    <tbody id="debtorsReportBody"></tbody>
-                </table>
+            <div class="table-container" style="margin-top:16px;">
+                <div class="table-toolbar"><strong>📈 الأرباح الشهرية</strong></div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الشهر</th>
+                                <th>عدد الفواتير</th>
+                                <th>إجمالي المبيعات</th>
+                                <th>تكلفة البضاعة المباعة</th>
+                                <th>صافي الربح</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthlyProfitBody"></tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+            <div class="table-container" style="margin-top:16px;">
+                <div class="table-toolbar"><strong>📦 قيمة المخزون بسعر الشراء</strong></div>
+                <div style="padding:16px; font-size:18px; font-weight:bold;" id="inventoryCostValue"></div>
+            </div>
         </div>
 
     </main>
 
-    <!-- حاوية المودالات -->
     <div id="modalContainer"></div>
-
-    <!-- حاوية التوست -->
     <div class="toast-container" id="toastContainer"></div>
 
     <script src="main.js"></script>
