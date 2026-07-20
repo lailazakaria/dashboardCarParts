@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام إدارة متجر قطع السيارات</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
     <button class="mobile-menu-btn" id="mobileMenuBtn" title="القائمة">☰</button>
@@ -27,6 +25,7 @@
             <a data-page="purchases"><span class="nav-icon">📥</span> المشتريات</a>
             <a data-page="payments"><span class="nav-icon">💳</span> تسديدات العملاء</a>
             <a data-page="supplier_payments"><span class="nav-icon">🏦</span> مدفوعات الموردين</a>
+            <a data-page="withdrawals"><span class="nav-icon">💸</span> السحوبات</a>
             <a data-page="reports"><span class="nav-icon">📋</span> التقارير</a>
         </nav>
         <div class="sidebar-footer">© 2025 - جميع الحقوق محفوظة</div>
@@ -36,11 +35,7 @@
 
         <!-- لوحة التحكم -->
         <div class="page active" id="page-dashboard">
-            <div class="page-header">
-                <div>
-                    <h1>📊 لوحة التحكم</h1><span class="subtitle">نظرة عامة</span>
-                </div>
-            </div>
+            <div class="page-header"><div><h1>📊 لوحة التحكم</h1><span class="subtitle">نظرة عامة</span></div></div>
             <div class="stats-grid" id="dashboardStats"></div>
             <div class="table-container" style="margin-top:16px;">
                 <div class="table-toolbar"><strong>📋 آخر العمليات</strong></div>
@@ -50,260 +45,101 @@
 
         <!-- العملاء -->
         <div class="page" id="page-customers">
-            <div class="page-header">
-                <div>
-                    <h1>👥 العملاء</h1><span class="subtitle">مدين ودائن</span>
-                </div><button class="btn btn-primary" onclick="openCustomerModal()">➕ إضافة عميل</button>
-            </div>
+            <div class="page-header"><div><h1>👥 العملاء</h1></div><button class="btn btn-primary" onclick="openCustomerModal()">➕ إضافة عميل</button></div>
             <div class="table-container">
-                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
-                        id="customerSearch" oninput="renderCustomers()"></div>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>الاسم</th>
-                                <th>الهاتف</th>
-                                <th>العنوان</th>
-                                <th>الرصيد</th>
-                                <th>الحالة</th>
-                                <th>الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="customersTableBody"></tbody>
-                    </table>
-                </div>
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..." id="customerSearch" oninput="renderCustomers()"></div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الرصيد</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="customersTableBody"></tbody></table></div>
             </div>
         </div>
 
         <!-- الموردين -->
         <div class="page" id="page-suppliers">
-            <div class="page-header">
-                <div>
-                    <h1>🏭 الموردين</h1><span class="subtitle">الديون المستحقة لهم/عليهم</span>
-                </div><button class="btn btn-primary" onclick="openSupplierModal()">➕ إضافة مورد</button>
-            </div>
+            <div class="page-header"><div><h1>🏭 الموردين</h1></div><button class="btn btn-primary" onclick="openSupplierModal()">➕ إضافة مورد</button></div>
             <div class="table-container">
-                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
-                        id="supplierSearch" oninput="renderSuppliers()"></div>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>الاسم</th>
-                                <th>الهاتف</th>
-                                <th>العنوان</th>
-                                <th>الرصيد (نحن مدينون)</th>
-                                <th>الحالة</th>
-                                <th>الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="suppliersTableBody"></tbody>
-                    </table>
-                </div>
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..." id="supplierSearch" oninput="renderSuppliers()"></div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الرصيد</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="suppliersTableBody"></tbody></table></div>
             </div>
         </div>
 
         <!-- المستودع -->
         <div class="page" id="page-inventory">
-            <div class="page-header">
-                <div>
-                    <h1>📦 المستودع</h1><span class="subtitle">إدارة القطع</span>
-                </div><button class="btn btn-primary" onclick="openInventoryModal()">➕ إضافة قطعة</button>
-            </div>
+            <div class="page-header"><div><h1>📦 المستودع</h1></div><button class="btn btn-primary" onclick="openInventoryModal()">➕ إضافة قطعة</button></div>
             <div class="table-container">
                 <div class="table-toolbar">
-                    <input type="text" class="search-input" placeholder="🔍 بحث..." id="inventorySearch"
-                        oninput="renderInventory()">
-                    <select id="categoryFilter" onchange="renderInventory()"
-                        style="padding:9px;border-radius:8px;border:1.5px solid var(--border);">
+                    <input type="text" class="search-input" placeholder="🔍 بحث..." id="inventorySearch" oninput="renderInventory()">
+                    <select id="categoryFilter" onchange="renderInventory()" style="padding:9px;border-radius:8px;border:1.5px solid var(--border);">
                         <option value="">جميع الفئات</option>
-                        <option value="محرك">محرك</option>
-                        <option value="ناقل حركة">ناقل حركة</option>
-                        <option value="فرامل">فرامل</option>
-                        <option value="تعليق">تعليق</option>
-                        <option value="كهرباء">كهرباء</option>
-                        <option value="تكييف">تكييف</option>
-                        <option value="إطارات">إطارات</option>
-                        <option value="بطاريات">بطاريات</option>
-                        <option value="فلاتر">فلاتر</option>
-                        <option value="زيوت">زيوت</option>
-                        <option value="أخرى">أخرى</option>
+                        <option value="محرك">محرك</option><option value="ناقل حركة">ناقل حركة</option>
+                        <option value="فرامل">فرامل</option><option value="تعليق">تعليق</option>
+                        <option value="كهرباء">كهرباء</option><option value="تكييف">تكييف</option>
+                        <option value="إطارات">إطارات</option><option value="بطاريات">بطاريات</option>
+                        <option value="فلاتر">فلاتر</option><option value="زيوت">زيوت</option><option value="أخرى">أخرى</option>
                     </select>
                 </div>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>الصورة</th>
-                                <th>القطعة</th>
-                                <th>رقم</th>
-                                <th>فئة</th>
-                                <th>الكمية</th>
-                                <th>شراء</th>
-                                <th>بيع</th>
-                                <th>المورد</th>
-                                <th>تنبيه</th>
-                                <th>إجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inventoryTableBody"></tbody>
-                    </table>
-                </div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>#</th><th>الصورة</th><th>القطعة</th><th>رقم</th><th>فئة</th><th>الكمية</th><th>سعر الشراء</th><th>المورد</th><th>تنبيه</th><th>إجراءات</th></tr></thead><tbody id="inventoryTableBody"></tbody></table></div>
             </div>
         </div>
 
         <!-- المبيعات -->
         <div class="page" id="page-sales">
-            <div class="page-header">
-                <div>
-                    <h1>💰 المبيعات</h1><span class="subtitle">فواتير البيع والمرتجعات</span>
-                </div><button class="btn btn-primary" onclick="openSaleModal()">🛒 بيع جديد</button>
-            </div>
+            <div class="page-header"><div><h1>💰 المبيعات</h1></div><button class="btn btn-primary" onclick="openSaleModal()">🛒 بيع جديد</button></div>
             <div class="table-container">
-                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
-                        id="saleSearch" oninput="renderSales()"></div>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>التاريخ</th>
-                                <th>العميل</th>
-                                <th>القطعة</th>
-                                <th>كمية</th>
-                                <th>الإجمالي</th>
-                                <th>مدفوع</th>
-                                <th>متبقي</th>
-                                <th>حالة</th>
-                                <th>إجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="salesTableBody"></tbody>
-                    </table>
-                </div>
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..." id="saleSearch" oninput="renderSales()"></div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>#</th><th>التاريخ</th><th>العميل</th><th>القطعة</th><th>كمية</th><th>سعر البيع</th><th>الإجمالي</th><th>مدفوع</th><th>متبقي</th><th>حالة</th><th>إجراءات</th></tr></thead><tbody id="salesTableBody"></tbody></table></div>
             </div>
         </div>
 
         <!-- المشتريات -->
         <div class="page" id="page-purchases">
-            <div class="page-header">
-                <div>
-                    <h1>📥 المشتريات</h1><span class="subtitle">فواتير الشراء من الموردين</span>
-                </div><button class="btn btn-primary" onclick="openPurchaseModal()">🧾 شراء جديد</button>
-            </div>
+            <div class="page-header"><div><h1>📥 المشتريات</h1></div><button class="btn btn-primary" onclick="openPurchaseModal()">🧾 شراء جديد</button></div>
             <div class="table-container">
-                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
-                        id="purchaseSearch" oninput="renderPurchases()"></div>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>التاريخ</th>
-                                <th>المورد</th>
-                                <th>القطعة</th>
-                                <th>كمية</th>
-                                <th>الإجمالي</th>
-                                <th>مدفوع</th>
-                                <th>متبقي</th>
-                                <th>حالة</th>
-                                <th>إجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="purchasesTableBody"></tbody>
-                    </table>
-                </div>
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..." id="purchaseSearch" oninput="renderPurchases()"></div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>#</th><th>التاريخ</th><th>المورد</th><th>القطعة</th><th>كمية</th><th>سعر الشراء</th><th>الإجمالي</th><th>مدفوع</th><th>متبقي</th><th>حالة</th><th>إجراءات</th></tr></thead><tbody id="purchasesTableBody"></tbody></table></div>
             </div>
         </div>
 
         <!-- تسديدات العملاء -->
         <div class="page" id="page-payments">
-            <div class="page-header">
-                <div>
-                    <h1>💳 تسديدات العملاء</h1>
-                </div><button class="btn btn-success" onclick="openPaymentModal()">💵 تسجيل دفعة</button>
-            </div>
+            <div class="page-header"><div><h1>💳 تسديدات العملاء</h1></div><button class="btn btn-success" onclick="openPaymentModal()">💵 تسجيل دفعة</button></div>
             <div class="table-container">
-                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
-                        id="paymentSearch" oninput="renderPayments()"></div>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>التاريخ</th>
-                                <th>العميل</th>
-                                <th>المبلغ</th>
-                                <th>ملاحظات</th>
-                                <th>إجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="paymentsTableBody"></tbody>
-                    </table>
-                </div>
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..." id="paymentSearch" oninput="renderPayments()"></div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>#</th><th>التاريخ</th><th>العميل</th><th>المبلغ</th><th>ملاحظات</th><th>إجراءات</th></tr></thead><tbody id="paymentsTableBody"></tbody></table></div>
             </div>
         </div>
 
         <!-- مدفوعات الموردين -->
         <div class="page" id="page-supplier_payments">
-            <div class="page-header">
-                <div>
-                    <h1>🏦 مدفوعات الموردين</h1>
-                </div><button class="btn btn-success" onclick="openSupplierPaymentModal()">💵 دفع للمورد</button>
-            </div>
+            <div class="page-header"><div><h1>🏦 مدفوعات الموردين</h1></div><button class="btn btn-success" onclick="openSupplierPaymentModal()">💵 دفع للمورد</button></div>
             <div class="table-container">
-                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..."
-                        id="supplierPaymentSearch" oninput="renderSupplierPayments()"></div>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>التاريخ</th>
-                                <th>المورد</th>
-                                <th>المبلغ</th>
-                                <th>ملاحظات</th>
-                                <th>إجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="supplierPaymentsTableBody"></tbody>
-                    </table>
-                </div>
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..." id="supplierPaymentSearch" oninput="renderSupplierPayments()"></div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>#</th><th>التاريخ</th><th>المورد</th><th>المبلغ</th><th>ملاحظات</th><th>إجراءات</th></tr></thead><tbody id="supplierPaymentsTableBody"></tbody></table></div>
+            </div>
+        </div>
+
+        <!-- السحوبات -->
+        <div class="page" id="page-withdrawals">
+            <div class="page-header"><div><h1>💸 السحوبات</h1><span class="subtitle">تسجيل المبالغ المسحوبة من الخزينة</span></div><button class="btn btn-danger" onclick="openWithdrawalModal()">💸 تسجيل سحب</button></div>
+            <div class="table-container">
+                <div class="table-toolbar"><input type="text" class="search-input" placeholder="🔍 بحث..." id="withdrawalSearch" oninput="renderWithdrawals()"></div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>#</th><th>التاريخ</th><th>اسم الشخص</th><th>المبلغ</th><th>السبب</th><th>إجراءات</th></tr></thead><tbody id="withdrawalsTableBody"></tbody></table></div>
             </div>
         </div>
 
         <!-- التقارير -->
         <div class="page" id="page-reports">
-            <div class="page-header">
-                <div>
-                    <h1>📋 التقارير</h1>
-                </div>
-            </div>
+            <div class="page-header"><div><h1>📋 التقارير</h1></div></div>
             <div class="stats-grid" id="reportStats"></div>
             <div class="table-container" style="margin-top:16px;">
                 <div class="table-toolbar"><strong>📈 الأرباح الشهرية</strong></div>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>الشهر</th>
-                                <th>عدد الفواتير</th>
-                                <th>إجمالي المبيعات</th>
-                                <th>تكلفة البضاعة المباعة</th>
-                                <th>صافي الربح</th>
-                            </tr>
-                        </thead>
-                        <tbody id="monthlyProfitBody"></tbody>
-                    </table>
-                </div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>الشهر</th><th>عدد الفواتير</th><th>إجمالي المبيعات</th><th>تكلفة البضاعة المباعة</th><th>صافي الربح</th></tr></thead><tbody id="monthlyProfitBody"></tbody></table></div>
             </div>
             <div class="table-container" style="margin-top:16px;">
                 <div class="table-toolbar"><strong>📦 قيمة المخزون بسعر الشراء</strong></div>
                 <div style="padding:16px; font-size:18px; font-weight:bold;" id="inventoryCostValue"></div>
+            </div>
+            <div class="table-container" style="margin-top:16px;">
+                <div class="table-toolbar"><strong>💸 إجمالي السحوبات</strong></div>
+                <div style="padding:16px; font-size:18px; font-weight:bold; color:var(--danger);" id="totalWithdrawals"></div>
             </div>
         </div>
 
@@ -314,5 +150,4 @@
 
     <script src="main.js"></script>
 </body>
-
 </html>
