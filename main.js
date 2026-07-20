@@ -49,7 +49,7 @@
 
   function formatCurrency(amount) {
     const num = parseFloat(amount || 0);
-    return num.toLocaleString("ar-EG") + " ج.م";
+    return num.toLocaleString("ar-EG") + " ل.س";
   }
 
   function formatDate(dateStr) {
